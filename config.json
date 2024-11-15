@@ -1,0 +1,56 @@
+{
+    "name": "REDCap Payments",
+
+    "namespace": "Stanford\\REDCapPayments",
+
+    "description": "This module allows Research teams to set up a Redirect-based Payment Integration to enable participants to make payments in the Payment Procesor environment. Then redirect participant back to REDCap after payment is complete. ",
+
+    "documentation": "README.md",
+
+    "framework-version": 16,
+
+    "authors": [
+        {
+            "name": "Ihab Zeedia",
+            "email": "ihab.zeedia@stanford.edu",
+            "institution": "Stanford University"
+        }
+    ],
+
+    "permissions": [
+        "redcap_survey_complete"
+    ],
+
+    "enable-every-page-hooks-on-system-pages": false,
+    "links": {
+        "project": [
+
+        ],
+        "control-center": [
+
+        ]
+    },
+
+    "no-auth-pages": [
+
+    ],
+
+    "project-settings": [
+
+    ],
+
+    "system-settings": [
+
+    ],
+
+    "crons": [
+
+    ],
+
+    "compatibility": {
+        "php-version-min": "",
+        "php-version-max": "",
+        "redcap-version-min": "",
+        "redcap-version-max": ""
+    }
+}
