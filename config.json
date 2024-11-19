@@ -1,56 +1,171 @@
 {
-    "name": "REDCap Payments",
-
-    "namespace": "Stanford\\REDCapPayments",
-
-    "description": "This module allows Research teams to set up a Redirect-based Payment Integration to enable participants to make payments in the Payment Procesor environment. Then redirect participant back to REDCap after payment is complete. ",
-
-    "documentation": "README.md",
-
-    "framework-version": 16,
-
-    "authors": [
-        {
-            "name": "Ihab Zeedia",
-            "email": "ihab.zeedia@stanford.edu",
-            "institution": "Stanford University"
-        }
-    ],
-
-    "permissions": [
-        "redcap_survey_complete"
-    ],
-
-    "enable-every-page-hooks-on-system-pages": false,
-    "links": {
-        "project": [
-
-        ],
-        "control-center": [
-
-        ]
-    },
-
-    "no-auth-pages": [
-
-    ],
-
-    "project-settings": [
-
-    ],
-
-    "system-settings": [
-
-    ],
-
-    "crons": [
-
-    ],
-
-    "compatibility": {
-        "php-version-min": "",
-        "php-version-max": "",
-        "redcap-version-min": "",
-        "redcap-version-max": ""
+  "name": "REDCap Payments",
+  "namespace": "Stanford\\REDCapPayments",
+  "description": "This module allows Research teams to set up a Redirect-based Payment Integration to enable participants to make payments in the Payment Procesor environment. Then redirect participant back to REDCap after payment is complete. ",
+  "documentation": "README.md",
+  "framework-version": 16,
+  "authors": [
+    {
+      "name": "Ihab Zeedia",
+      "email": "ihab.zeedia@stanford.edu",
+      "institution": "Stanford University"
     }
+  ],
+  "enable-every-page-hooks-on-system-pages": false,
+  "links": {
+    "project": [
+    ],
+    "control-center": [
+    ]
+  },
+  "no-auth-pages": [
+    "pages/callback"
+  ],
+  "project-settings": [
+    {
+      "key": "payment-processor-url",
+      "name": "Enter Payment processor URL",
+      "required": true,
+      "type": "text"
+    },
+    {
+      "key": "payment-processor-client-id",
+      "name": "Enter Payment processor Customer ID",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "payment-processor-client-id-attribute-name",
+      "name": "Enter Payment processor Client ID URL Attribute name",
+      "required": true,
+      "type": "text",
+      "branchingLogic": {
+        "field": "payment-processor-client-id",
+        "op": "<>",
+        "value": ""
+      }
+    },
+    {
+      "key": "payment-processor-client-secret",
+      "name": "Enter Payment processor Client Secret",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "payment-processor-client-secret-attribute-name",
+      "name": "Enter Payment processor Client Secret URL Attribute name",
+      "required": true,
+      "type": "text",
+      "branchingLogic": {
+        "field": "payment-processor-client-secret",
+        "op": "<>",
+        "value": ""
+      }
+    },
+    {
+      "key": "payment-processor-button-logic",
+      "name": "Logic to Display Pay button. ",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "payment-processor-order-id",
+      "name": "Select the REDCap field that contains the order Id value? If left empty a combination of project id and record id will be used. ",
+      "required": false,
+      "type": "field-list"
+    },
+    {
+      "key": "payment-processor-order-id-attribute-name",
+      "name": "Enter Payment processor Order ID Attribute name",
+      "required": true,
+      "type": "text",
+      "branchingLogic": {
+        "field": "order-id-field",
+        "op": "<>",
+        "value": ""
+      }
+    },
+    {
+      "key": "payment-processor-order-amount",
+      "name": "Specify the order amount. ",
+      "required": true,
+      "type": "text"
+    },
+    {
+      "key": "payment-processor-order-amount-attribute-name",
+      "name": "Enter Payment processor Order Amount Attribute name",
+      "required": true,
+      "type": "text",
+      "branchingLogic": {
+        "field": "order-amount",
+        "op": "<>",
+        "value": ""
+      }
+    },
+    {
+      "key": "description",
+      "name": "<hr>Configuration for Returned Response",
+      "type": "descriptive"
+    },
+    {
+      "key": "fields-map",
+      "name": "<b>If you want to save Payment Processor Returned data to the record. </b>",
+      "required": true,
+      "type": "sub_settings",
+      "repeatable": true,
+      "sub_settings": [
+        {
+          "key": "payment-processor-attribute",
+          "name": "<b>Specify the returned attribute by Payment processor when transaction is complete.</b>",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "key": "redcap-payment-field",
+          "name": "<b>REDCap field where you want to save returned response.</b>",
+          "required": true,
+          "type": "field-list",
+          "branchingLogic": {
+            "field": "payment-processor-attribute",
+            "op": "<>",
+            "value": ""
+          }
+        }
+      ]
+    },
+    {
+      "key": "enable-redirect-to-redcap",
+      "name": "When Payment is processed Do you want user to be redirected back to REDCap page?",
+      "required": false,
+      "type": "checkbox"
+    },
+    {
+      "key": "enable-redirect-to-redcap-attribute-name",
+      "name": "Enable redirect Flag attribute name",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "redirect-to-redcap-attribute-name",
+      "name": "REDCap redirect URL attribute name",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "enable-system-debug-logging",
+      "name": "<b>Enable Debug Logging (system-wide)</b><i>(optional)</i> Requires installation and configuration of emLogger",
+      "required": false,
+      "type": "checkbox"
+    }
+  ],
+  "system-settings": [
+  ],
+  "crons": [
+  ],
+  "compatibility": {
+    "php-version-min": "",
+    "php-version-max": "",
+    "redcap-version-min": "",
+    "redcap-version-max": ""
+  }
 }
